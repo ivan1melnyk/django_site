@@ -11,6 +11,37 @@
     <main class="container">
         <h1>Main page</h1>
     </main>
+    <nav style="margin-bottom: 20px; border-bottom: 2px solid; padding-left: 30px">
+        {% if user.is_authenticated %}
+        <ul>
+            <li><a href="{% url 'quoteapp:quote' %}" role="button">Add Quote</a></li>
+            <li><a href="{% url 'quoteapp:tag' %}" role="button">Add Tag</a></li>
+        </ul>
+        <ul>
+            <li>Welcome <b>{{ user.username }}!</b></li>
+            <li><a href="{% url 'users:profile' %}" role="button">Profile</a></li>
+            <li><a href="{% url 'users:logout' %}" role="button">Logout</a></li>
+        </ul>
+        {% else %}
+        <ul>
+            <li><a href="{% url 'users:signup' %}" role="button">Sign Up</a></li>
+            <li><a href="{% url 'users:login' %}" role="button">Login</a></li>
+        </ul>
+        {% endif %}
+    </nav>
+    {% for quote in quotes %}
+    <nav style="margin-bottom: 20px; border-bottom: 2px solid; padding-left: 30px">
+        <ul>
+            <li>
+                <div>
+                    <p>{{ quote.quote }}</p>
+                    <p>{{ quote.authors }}</p>
+                    <p>{{ quote.tags }}</p>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    {% endfor %}
 </body>
 
 </html>
