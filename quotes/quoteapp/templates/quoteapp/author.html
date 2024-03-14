@@ -30,20 +30,18 @@
         </ul>
         {% endif %}
     </nav>
-    {% for quote in quotes %}
-    <nav style="width: 80%; background-color: rgb(0, 56, 77) ;margin-bottom: 30px; border: 2px solid; padding-left: 30px"
-        class="container">
+    <nav style="width: 80%; margin-bottom: 20px; border-bottom: 2px solid; padding-left: 30px" class="container">
         <ul>
             <li>
                 <div>
-                    <p>{{ quote.quote }}</p>
-                    <a href="{% url 'quoteapp:author' quote.id %}" class="button">{{ quote.author }}</a>
-                    <p>{{ quote.tags }}</p>
+                    <h1>{{ author.name }}</h1>
+                    <h4>Born {{ author.born_date }} in {{ author.born_place }}</h4>
+                    <h4>Description:</h4>
+                    <p>{{ author.description }}</p>
                 </div>
             </li>
         </ul>
     </nav>
-    {% endfor %}
 </body>
 
 </html>

@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import TagForm, QuoteForm
+from .forms import TagForm, QuoteForm, AuthorForm
 from .models import Tag, Author, Quote
 from django.contrib.auth.decorators import login_required
+from django.views.generic import DetailView
 
 
 # Create your views here.
@@ -17,6 +18,12 @@ def main(request):
     return render(request, 'quoteapp/index.html', {"quotes": quotes, "authors": authors, "tags": tags})
 
 
+class AuthorView(DetailView):
+    model = Author
+    template_name = 'quoteapp/author.html'
+    context_object_name = 'author'
+
+
 @login_required
 def tag(request):
     if request.method == 'POST':
@@ -30,6 +37,21 @@ def tag(request):
             return render(request, 'quoteapp/tag.html', {'form': form})
 
     return render(request, 'quoteapp/tag.html', {'form': TagForm()})
+
+
+@login_required
+def add_author(request):
+    if request.method == 'POST':
+        form = AuthorForm(request.POST)
+        if form.is_valid():
+            author = form.save(commit=False)
+            author.user = request.user
+            author.save()
+            return redirect(to='quoteapp:main')
+        else:
+            return render(request, 'quoteapp/add_author.html', {'form': form})
+
+    return render(request, 'quoteapp/add_author.html', {'form': AuthorForm()})
 
 
 @login_required

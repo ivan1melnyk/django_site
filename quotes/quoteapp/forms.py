@@ -34,4 +34,4 @@ class QuoteForm(ModelForm):
     class Meta:
         model = Quote
         fields = ['quote']
-        exclude = ['authors', 'tags']
+        exclude = ['author', 'tags']
