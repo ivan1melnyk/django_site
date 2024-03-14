@@ -21,7 +21,7 @@ class Author(models.Model):
 
 class Quote(models.Model):
     quote = models.TextField()
-    author = models.ManyToManyField(Author, related_name='quotes')
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag)
 

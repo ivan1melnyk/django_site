@@ -7,14 +7,10 @@ from django.views.generic import DetailView
 
 # Create your views here.
 def main(request):
-    if request.user.is_authenticated:
-        quotes = Quote.objects.all()
-        authors = Author.objects.all()
-        tags = Tag.objects.all()
-    else:
-        quotes = []
-        authors = []
-        tags = []
+    # if request.user.is_authenticated:
+    quotes = Quote.objects.all()
+    authors = Author.objects.all()
+    tags = Tag.objects.all()
     return render(request, 'quoteapp/index.html', {"quotes": quotes, "authors": authors, "tags": tags})
 
 
