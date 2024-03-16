@@ -39,8 +39,9 @@
             <li>
                 <div>
                     <p>{{ quote.quote }}</p>
-                    <a href="{% url 'quoteapp:author' quote.author.id %}" class="button">{{ quote.author }}</a>
-                    <p>{{ quote.tags }}</p>
+                    <p><a href="{% url 'quoteapp:author' quote.author.id %}" class="button">{{ quote.author }}</a></p>
+                    {% for tag in quote.tags.all %} <button style="margin-right: 6px" role="button">{{ tag }}</button>
+                    {% endfor %}
                 </div>
             </li>
         </ul>

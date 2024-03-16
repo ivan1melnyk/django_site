@@ -62,15 +62,13 @@ def quote(request):
             new_quote.user = request.user
             new_quote.save()
 
+            author = request.GET.get('author')
+            new_quote.author = author.id
+
             choice_tags = Tag.objects.filter(
                 name__in=request.POST.getlist('tags'))
             for tag in choice_tags.iterator():
                 new_quote.tags.add(tag)
-
-            choice_authors = Author.objects.filter(
-                name__in=request.POST.getlist('authors'))
-            for author in choice_authors.iterator():
-                new_quote.authors.add(author)
 
             new_quote.save()
             return redirect(to='quoteapp:main')

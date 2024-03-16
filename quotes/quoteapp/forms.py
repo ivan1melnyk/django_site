@@ -1,37 +1,38 @@
-from django.forms import ModelForm, CharField, TextInput, Textarea, DateField, DateTimeInput
+from django import forms
 from .models import Tag, Quote, Author
 
 
-class TagForm(ModelForm):
+class TagForm(forms.ModelForm):
 
-    name = CharField(min_length=3, max_length=25,
-                     required=True, widget=TextInput())
+    name = forms.CharField(min_length=3, max_length=25,
+                           required=True, widget=forms.TextInput())
 
     class Meta:
         model = Tag
         fields = ['name']
 
 
-class AuthorForm(ModelForm):
+class AuthorForm(forms.ModelForm):
 
-    name = CharField(min_length=5, max_length=80,
-                     required=True, widget=TextInput())
-    born_date = DateField()
-    born_place = CharField(min_length=5, max_length=150,
-                           required=True, widget=TextInput())
-    description = CharField(widget=Textarea)
+    name = forms.CharField(min_length=5, max_length=80,
+                           required=True, widget=forms.TextInput())
+    born_date = forms.DateField(widget=forms.DateInput())
+    born_place = forms.CharField(min_length=5, max_length=150,
+                                 required=True, widget=forms.TextInput())
+    description = forms.CharField(widget=forms.Textarea())
 
     class Meta:
         model = Author
         fields = ['name', 'born_date', 'born_place', 'description']
 
 
-class QuoteForm(ModelForm):
+class QuoteForm(forms.ModelForm):
 
-    quote = TextInput()
+    quote = forms.CharField(widget=forms.Textarea)
+    author = forms.ModelChoiceField(queryset=Author.objects.all())
     # created = DateTimeInput()
 
     class Meta:
         model = Quote
-        fields = ['quote']
-        exclude = ['author', 'tags']
+        fields = ['quote', 'author']
+        exclude = ['tags']

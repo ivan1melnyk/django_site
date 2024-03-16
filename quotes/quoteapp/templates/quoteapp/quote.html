@@ -12,9 +12,10 @@
     </div>
     <div style="padding: 10px">
         <label> Select author:
-            <select name="authors" multiple="multiple" required>
+            <select name="author" required>
+                <option value="" selected>--------------</option>
                 {% for author in authors %}
-                <option value="{{author.name}}">{{author.name}}</option>
+                <option value="{{author}}">{{author.name}}</option>
                 {% endfor %}
             </select>
         </label>
@@ -26,6 +27,7 @@
                 <option value="{{tag.name}}">{{tag.name}}</option>
                 {% endfor %}
             </select>
+            <p>Hold down “Control”, or “Command” on a Mac, to select more than one.</p>
         </label>
     </div>
     <div class="grid">
