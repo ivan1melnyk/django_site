@@ -42,6 +42,7 @@ def add_author(request):
         if form.is_valid():
             author = form.save(commit=False)
             author.user = request.user
+            print(vars(request.user))
             author.save()
             return redirect(to='quoteapp:main')
         else:
@@ -60,13 +61,14 @@ def quote(request):
         if form.is_valid():
             new_quote = form.save(commit=False)
             new_quote.user = request.user
-            new_quote.save()
 
-            author = request.GET.get('author')
+            author_id = request.POST.get('author')
+            author = Author.objects.get(pk=author_id)
+            print(author, author.id, type(author,))
             new_quote.author = author.id
 
-            choice_tags = Tag.objects.filter(
-                name__in=request.POST.getlist('tags'))
+            tags_names = request.POST.getlist('tags')
+            choice_tags = Tag.objects.filter(name__in=tags_names)
             for tag in choice_tags.iterator():
                 new_quote.tags.add(tag)
 

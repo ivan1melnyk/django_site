@@ -29,10 +29,9 @@ class AuthorForm(forms.ModelForm):
 class QuoteForm(forms.ModelForm):
 
     quote = forms.CharField(widget=forms.Textarea)
-    author = forms.ModelChoiceField(queryset=Author.objects.all())
     # created = DateTimeInput()
 
     class Meta:
         model = Quote
-        fields = ['quote', 'author']
+        fields = ['quote']
         exclude = ['tags']
