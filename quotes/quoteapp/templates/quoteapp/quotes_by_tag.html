@@ -1,0 +1,23 @@
+{% extends "quoteapp/base.html" %}
+
+{% block title %} Quotes by Tag {% endblock %}
+
+{% block content %}
+
+<body>
+    <h1>Quotes by <span role="button">{{ tag.name }}</span></h1>
+    <ul>
+        {% for quote in quotes %}
+        <nav style="width: 80%; background-color: rgb(0, 56, 77) ;margin-bottom: 30px; border: 2px solid; padding-left: 30px"
+            class="container">
+            <li>{{ quote.quote }} - <a href="{% url 'quoteapp:author' quote.author.id %}" class="button">
+                    {{ quote.author }}</a>
+            </li>
+        </nav>
+        {% empty %}
+        <li>No quotes found for this tag.</li>
+        {% endfor %}
+    </ul>
+</body>
+
+{% endblock %}

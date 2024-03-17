@@ -1,5 +1,7 @@
 {% extends "quoteapp/base.html" %}
 
+{% block title %} Add Author {% endblock %}
+
 {% block content %}
 <form method="POST" action="{% url 'quoteapp:add_author' %}">
     {% csrf_token %}

@@ -32,21 +32,38 @@
     </nav>
 
 
-    {% for quote in quotes %}
+    {% for quote in page_obj %}
     <nav style="width: 80%; background-color: rgb(0, 56, 77) ;margin-bottom: 30px; border: 2px solid; padding-left: 30px"
         class="container">
         <ul>
             <li>
-                <div>
-                    <p>{{ quote.quote }}</p>
-                    <p><a href="{% url 'quoteapp:author' quote.author.id %}" class="button">{{ quote.author }}</a></p>
-                    {% for tag in quote.tags.all %} <button style="margin-right: 6px" role="button">{{ tag }}</button>
-                    {% endfor %}
-                </div>
+                <p>{{ quote.quote }}</p>
+                <p><a href="{% url 'quoteapp:author' quote.author.id %}" class="button">{{ quote.author }}</a></p>
+                {% for tag in quote.tags.all %}
+                <a href="{% url 'quoteapp:quotes_by_tag' tag.id %}" style="margin-right: 6px" role="button">
+                    {{ tag.name }}</a>
+                {% endfor %}
             </li>
         </ul>
     </nav>
     {% endfor %}
+
+    <div class="pagination">
+        <nav class="step-links">
+            {% if page_obj.has_previous %}
+            <a href="?page=1" role="button">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}" role="button">previous</a>
+            {% endif %}
+
+            <span class="current" role="button">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" role="button">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" role="button">last &raquo;</a>
+            {% endif %}
+    </div>
 </body>
 
 </html>
